@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/oncallsh/oncall-go"
+	"github.com/boopshq/oncall-go"
 )
 
 func main() {
