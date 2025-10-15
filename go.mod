@@ -1,3 +1,3 @@
-module github.com/oncallsh/oncall-go
+module github.com/boopshq/oncall-go
 
-go 1.23.2
+go 1.25.3
