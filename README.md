@@ -9,7 +9,7 @@ Go SDK for the oncall.sh API by beeps.
 ## Installation
 
 ```bash
-go get github.com/boopshq/oncall-go
+go get github.com/oncall-sh/oncall-go
 ```
 
 ## Basic Usage
@@ -22,7 +22,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/boopshq/oncall-go"
+    "github.com/oncall-sh/oncall-go"
 )
 
 func main() {
