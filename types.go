@@ -290,7 +290,7 @@ type Alert struct {
 }
 
 type AcknowledgeAlertInput struct {
-	UserID string `json:"userId"`
+	UserID *string `json:"userId,omitempty"`
 }
 
 type IntegrationProvider string

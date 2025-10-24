@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/boopshq/oncall-go"
+	"github.com/oncall-sh/oncall-go"
 )
 
 func main() {
@@ -34,13 +34,23 @@ func main() {
 
 	if len(activeAlerts) > 0 {
 		alert := activeAlerts[0]
-		acknowledged, err := client.Alert.Acknowledge(ctx, alert.ID, oncall.AcknowledgeAlertInput{
-			UserID: "user-123",
-		})
+
+		// Acknowledge using the API key's associated user (userId is optional)
+		acknowledged, err := client.Alert.Acknowledge(ctx, alert.ID, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
 		fmt.Printf("\nAcknowledged alert: %s\n", acknowledged.Title)
+
+		// Or explicitly provide a different userId
+		userID := "user-123"
+		acknowledged2, err := client.Alert.Acknowledge(ctx, alert.ID, &oncall.AcknowledgeAlertInput{
+			UserID: &userID,
+		})
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("Acknowledged alert with specific user: %s\n", acknowledged2.Title)
 
 		resolved, err := client.Alert.Resolve(ctx, alert.ID)
 		if err != nil {

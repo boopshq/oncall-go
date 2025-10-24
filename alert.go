@@ -54,12 +54,16 @@ func (a *AlertResource) Get(ctx context.Context, alertID string) (*Alert, error)
 	return &result.Alert, nil
 }
 
-func (a *AlertResource) Acknowledge(ctx context.Context, alertID string, input AcknowledgeAlertInput) (*Alert, error) {
+func (a *AlertResource) Acknowledge(ctx context.Context, alertID string, input *AcknowledgeAlertInput) (*Alert, error) {
 	var result struct {
 		Alert Alert `json:"alert"`
 	}
 	path := fmt.Sprintf("/alerts/%s/acknowledge", alertID)
-	if err := a.http.post(ctx, path, input, &result); err != nil {
+	body := input
+	if body == nil {
+		body = &AcknowledgeAlertInput{}
+	}
+	if err := a.http.post(ctx, path, body, &result); err != nil {
 		return nil, err
 	}
 	return &result.Alert, nil
@@ -120,7 +124,7 @@ func (a *AlertResource) GetSafe(ctx context.Context, alertID string) Result[Aler
 	return Result[Alert]{Data: alert}
 }
 
-func (a *AlertResource) AcknowledgeSafe(ctx context.Context, alertID string, input AcknowledgeAlertInput) Result[Alert] {
+func (a *AlertResource) AcknowledgeSafe(ctx context.Context, alertID string, input *AcknowledgeAlertInput) Result[Alert] {
 	alert, err := a.Acknowledge(ctx, alertID, input)
 	if err != nil {
 		return Result[Alert]{Error: err}
